@@ -3,8 +3,6 @@ name: Continuous Integration
 
 # This specifies when the actions should be run.
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
 
