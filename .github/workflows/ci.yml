@@ -1,0 +1,38 @@
+# .github/workflows/ci.yml
+name: Continuous Integration
+
+# This specifies when the actions should be run.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# This is the job configuration.
+jobs:
+  build-and-test:
+    # This specifies the runner. GitHub offers runners for Ubuntu, Windows, and macOS.
+    runs-on: ubuntu-latest
+
+    # This is the sequence of tasks called steps.
+    steps:
+      - uses: actions/checkout@v3
+        # This step checks out a copy of your repository.
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          # This step sets up a specific version of Node.js.
+
+      - name: Install dependencies
+        run: npm install
+        # This step installs the dependencies defined in package.json.
+
+      - name: Build
+        run: npm run build
+        # This step runs the build script specified in package.json.
+
+      - name: Run tests
+        run: npm test
+        # This step runs the test script specified in package.json.
