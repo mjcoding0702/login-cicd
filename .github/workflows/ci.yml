@@ -35,5 +35,5 @@ jobs:
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: GitHub Actions - Build Failure
           body: Test. The recent build has failed. Please check the details in the GitHub Actions logs.
-          to: user@example.com
+          to: chungmangjie2000@gmail.com
           from: CI Bot <ci-bot@example.com>
