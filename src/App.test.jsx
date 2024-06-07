@@ -17,5 +17,7 @@ describe("App form submission", () => {
     
     // Failed case
     expect(submitButton.disabled).toBe(false); 
+
+    expect(submitButton.disabled).toBe(false); 
   });
 });
