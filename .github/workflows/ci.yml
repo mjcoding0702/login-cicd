@@ -34,6 +34,17 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: GitHub Actions - Build Failure
-          body: Test. The recent build has failed. Please check the details in the GitHub Actions logs.
+          body: |
+            The recent build has failed.
+
+            - Repository: ${{ github.repository }}
+            - Workflow: ${{ github.workflow }}
+            - Action: ${{ github.action }}
+            - Event: ${{ github.event_name }}
+            - Commit Message: ${{ github.event.head_commit.message }}
+            - Commit Author: ${{ github.event.head_commit.author.name }}
+            - PR Link: ${{ github.event.pull_request.html_url }}
+
+            Please check the details in the GitHub Actions logs.
           to: chungmangjie2000@gmail.com
           from: CI Bot <ci-bot@example.com>
