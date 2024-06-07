@@ -1,36 +1,50 @@
-# .github/workflows/ci.yml
 name: Continuous Integration
 
-# This specifies when the actions should be run.
 on:
   pull_request:
     branches: [main]
 
-# This is the job configuration.
 jobs:
   build-and-test:
-    # This specifies the runner. GitHub offers runners for Ubuntu, Windows, and macOS.
     runs-on: ubuntu-latest
 
-    # This is the sequence of tasks called steps.
     steps:
       - uses: actions/checkout@v3
-        # This step checks out a copy of your repository.
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "16"
-          # This step sets up a specific version of Node.js.
 
       - name: Install dependencies
         run: npm install
-        # This step installs the dependencies defined in package.json.
 
       - name: Build
         run: npm run build
-        # This step runs the build script specified in package.json.
 
       - name: Run tests
         run: npm test
-        # This step runs the test script specified in package.json.
+
+      - name: Send email notification
+        if: failure()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: GitHub Actions - Build Failure
+          body: |
+            The recent build has failed.
+
+            - Repository: ${{ github.repository }}
+            - Workflow: ${{ github.workflow }}
+            - Action: ${{ github.action }}
+            - Event: ${{ github.event_name }}
+            - Commit Message: ${{ github.event.head_commit.message }}
+            - Commit Author: ${{ github.event.head_commit.author.name }}
+            - PR Link: ${{ github.event.pull_request.html_url }}
+
+            Please check the details in the GitHub Actions logs.
+          to: chungmangjie2000@gmail.com
+          from: CI Bot <ci-bot@example.com>
