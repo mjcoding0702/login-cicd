@@ -15,7 +15,7 @@ describe("App form submission", () => {
     // Type a valid email into the input
     await userEvent.type(emailInput, 'test@');
     
-    // Check if the button is not disabled
-    expect(submitButton.disabled).toBe(false); 
+    // Failed case
+    expect(submitButton.disabled).toBe(true); 
   });
 });
